@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Battle Runners — A cidade será dividida</title>
+<meta name="description" content="Corra. Conquiste. Domine territórios. Seja um dos 100 primeiros fundadores do Battle Runners.">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{background:#0A0A0A;color:#fff;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;overflow-x:hidden}
+
+/* HERO */
+.hero{min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:2rem;position:relative;background:radial-gradient(ellipse at center,#0d1a0d 0%,#0A0A0A 70%)}
+.hero::before{content:'';position:absolute;inset:0;background:url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%2339FF14' fill-opacity='0.03'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");pointer-events:none}
+.hero-tag{font-size:11px;letter-spacing:.15em;text-transform:uppercase;color:#39FF14;margin-bottom:1.5rem;opacity:.8}
+.hero h1{font-size:clamp(2.5rem,8vw,6rem);font-weight:800;line-height:1.05;letter-spacing:-.02em;margin-bottom:1.5rem}
+.hero h1 span{color:#39FF14;display:block}
+.hero-sub{font-size:clamp(1rem,2.5vw,1.25rem);color:#888;max-width:540px;line-height:1.7;margin-bottom:2.5rem}
+.btn-primary{display:inline-block;background:#39FF14;color:#000;font-weight:700;font-size:1rem;padding:1rem 2.5rem;border-radius:4px;text-decoration:none;letter-spacing:.05em;text-transform:uppercase;transition:all .2s;border:none;cursor:pointer}
+.btn-primary:hover{background:#fff;transform:translateY(-2px);box-shadow:0 0 30px rgba(57,255,20,.3)}
+.hero-scroll{position:absolute;bottom:2rem;left:50%;transform:translateX(-50%);display:flex;flex-direction:column;align-items:center;gap:8px;opacity:.4;font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:#888}
+.hero-scroll::after{content:'';display:block;width:1px;height:40px;background:linear-gradient(to bottom,#888,transparent)}
+
+/* DIVIDER */
+.divider{width:100%;height:1px;background:linear-gradient(to right,transparent,#1e1e1e,transparent)}
+
+/* CONCEITO */
+.conceito{padding:6rem 2rem;text-align:center;max-width:800px;margin:0 auto}
+.section-tag{font-size:11px;letter-spacing:.15em;text-transform:uppercase;color:#39FF14;margin-bottom:1rem;opacity:.8}
+.conceito h2{font-size:clamp(1.8rem,4vw,3rem);font-weight:700;line-height:1.2;margin-bottom:1.5rem}
+.conceito h2 em{color:#39FF14;font-style:normal}
+.conceito p{font-size:1.1rem;color:#666;line-height:1.8;max-width:600px;margin:0 auto}
+
+/* COMO FUNCIONA */
+.como{padding:6rem 2rem;background:#0d0d0d}
+.como-inner{max-width:900px;margin:0 auto;text-align:center}
+.como h2{font-size:clamp(1.8rem,4vw,2.5rem);font-weight:700;margin-bottom:1rem}
+.como-sub{color:#666;margin-bottom:4rem;font-size:1rem;line-height:1.7}
+.steps{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:2rem}
+.step{display:flex;flex-direction:column;align-items:center;text-align:center;gap:1rem}
+.step-num{width:56px;height:56px;border-radius:50%;border:1.5px solid #39FF14;display:flex;align-items:center;justify-content:center;font-size:1.25rem;font-weight:700;color:#39FF14;position:relative}
+.step-num::after{content:'→';position:absolute;right:-2rem;color:#222;font-size:1rem}
+.step:last-child .step-num::after{display:none}
+.step h3{font-size:1rem;font-weight:600;color:#fff}
+.step p{font-size:.875rem;color:#555;line-height:1.6}
+
+/* MAPA */
+.mapa{padding:6rem 2rem;text-align:center}
+.mapa-inner{max-width:900px;margin:0 auto}
+.mapa h2{font-size:clamp(1.8rem,4vw,2.5rem);font-weight:700;margin-bottom:1rem}
+.mapa-sub{color:#666;margin-bottom:3rem;font-size:1rem;line-height:1.7;max-width:500px;margin-left:auto;margin-right:auto}
+.mapa-visual{background:#0d0d0d;border:0.5px solid #1e1e1e;border-radius:16px;padding:3rem 2rem;position:relative;overflow:hidden}
+.mapa-visual::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at center,rgba(57,255,20,.05) 0%,transparent 70%)}
+.territories{display:grid;grid-template-columns:repeat(3,1fr);gap:1rem;max-width:400px;margin:0 auto}
+.territory{background:#111;border:0.5px solid #1e1e1e;border-radius:8px;padding:1rem;font-size:.8rem;color:#555;transition:all .3s}
+.territory.active{border-color:#39FF14;color:#39FF14;background:rgba(57,255,20,.05)}
+.territory.rival{border-color:#7B2EFF;color:#7B2EFF;background:rgba(123,46,255,.05)}
+.territory-label{font-size:.7rem;letter-spacing:.08em;text-transform:uppercase;margin-bottom:.25rem;opacity:.6}
+.territory-name{font-size:.9rem;font-weight:600}
+
+/* FUNDADORES */
+.fundadores{padding:6rem 2rem;background:#0d0d0d;text-align:center}
+.fundadores-inner{max-width:700px;margin:0 auto}
+.fundadores h2{font-size:clamp(1.8rem,4vw,2.5rem);font-weight:700;margin-bottom:1rem}
+.fundadores-sub{color:#666;margin-bottom:3rem;font-size:1rem;line-height:1.7}
+.beneficios{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:1rem;margin-bottom:3rem;text-align:left}
+.beneficio{background:#111;border:0.5px solid #1e1e1e;border-radius:12px;padding:1.25rem}
+.beneficio-icon{font-size:1.5rem;margin-bottom:.75rem}
+.beneficio h4{font-size:.9rem;font-weight:600;margin-bottom:.35rem;color:#fff}
+.beneficio p{font-size:.8rem;color:#555;line-height:1.6}
+.counter{display:flex;align-items:center;justify-content:center;gap:1rem;margin-bottom:3rem;flex-wrap:wrap}
+.counter-item{text-align:center}
+.counter-num{font-size:2.5rem;font-weight:800;color:#39FF14;line-height:1}
+.counter-label{font-size:.75rem;color:#555;text-transform:uppercase;letter-spacing:.08em;margin-top:.25rem}
+.counter-sep{color:#1e1e1e;font-size:2rem}
+
+/* FORMULÁRIO */
+.form-section{padding:6rem 2rem;text-align:center}
+.form-inner{max-width:600px;margin:0 auto}
+.form-inner h2{font-size:clamp(1.8rem,4vw,2.5rem);font-weight:700;margin-bottom:1rem}
+.form-inner p{color:#666;margin-bottom:2.5rem;font-size:1rem;line-height:1.7}
+.form-box{background:#0d0d0d;border:0.5px solid #1e1e1e;border-radius:16px;padding:2.5rem}
+.form-group{margin-bottom:1.25rem;text-align:left}
+.form-group label{display:block;font-size:.8rem;color:#666;letter-spacing:.08em;text-transform:uppercase;margin-bottom:.5rem}
+.form-group input{width:100%;background:#111;border:0.5px solid #1e1e1e;border-radius:8px;padding:.875rem 1rem;color:#fff;font-size:.95rem;outline:none;transition:border-color .2s}
+.form-group input:focus{border-color:#39FF14}
+.form-group input::placeholder{color:#333}
+.btn-form{width:100%;background:#39FF14;color:#000;font-weight:700;font-size:1rem;padding:1rem;border-radius:8px;border:none;cursor:pointer;letter-spacing:.05em;text-transform:uppercase;transition:all .2s;margin-top:.5rem}
+.btn-form:hover{background:#fff;transform:translateY(-1px)}
+.form-note{font-size:.75rem;color:#444;margin-top:1rem;line-height:1.6}
+
+/* RODAPÉ */
+footer{padding:3rem 2rem;border-top:0.5px solid #1a1a1a;text-align:center}
+.footer-logo{font-size:1.25rem;font-weight:800;letter-spacing:.05em;color:#fff;margin-bottom:.5rem}
+.footer-logo span{color:#39FF14}
+.footer-slogan{font-size:.8rem;color:#444;letter-spacing:.1em;text-transform:uppercase;margin-bottom:2rem}
+.footer-links{display:flex;justify-content:center;gap:2rem;margin-bottom:1.5rem;flex-wrap:wrap}
+.footer-links a{color:#555;text-decoration:none;font-size:.85rem;transition:color .2s}
+.footer-links a:hover{color:#39FF14}
+.footer-copy{font-size:.75rem;color:#333}
+
+/* ANIMAÇÕES */
+@keyframes pulse-green{0%,100%{box-shadow:0 0 0 0 rgba(57,255,20,.3)}50%{box-shadow:0 0 0 12px rgba(57,255,20,0)}}
+.btn-primary{animation:pulse-green 2.5s infinite}
+
+@keyframes fadeInUp{from{opacity:0;transform:translateY(30px)}to{opacity:1;transform:translateY(0)}}
+.hero h1,.hero-sub,.hero .btn-primary{animation:fadeInUp .8s ease both}
+.hero-sub{animation-delay:.15s}
+.hero .btn-primary{animation-delay:.3s}
+
+/* RESPONSIVE */
+@media(max-width:600px){
+  .steps{grid-template-columns:1fr 1fr}
+  .step-num::after{display:none}
+  .territories{grid-template-columns:1fr 1fr}
+  .counter-sep{display:none}
+}
+</style>
+</head>
+<body>
+
+<!-- HERO -->
+<section class="hero">
+  <p class="hero-tag">⚔️ Recrutamento aberto · Fundadores</p>
+  <h1>A CIDADE<span>SERÁ DIVIDIDA.</span></h1>
+  <p class="hero-sub">Até hoje você corria para completar quilômetros. Agora você corre para conquistar territórios.</p>
+  <a href="#fundadores" class="btn-primary">Quero ser Fundador</a>
+  <div class="hero-scroll">scroll</div>
+</section>
+
+<div class="divider"></div>
+
+<!-- CONCEITO -->
+<section class="conceito">
+  <p class="section-tag">O conceito</p>
+  <h2>Não é mais um app de corrida.<br><em>É uma guerra.</em></h2>
+  <p>Battle Runners transforma cada quilômetro percorrido em território conquistado. Corra pelos bairros da sua cidade, domine zonas, suba de ranking e prove que a cidade pertence a você.</p>
+</section>
+
+<div class="divider"></div>
+
+<!-- COMO FUNCIONA -->
+<section class="como">
+  <div class="como-inner">
+    <p class="section-tag">Como funciona</p>
+    <h2>Simples. Competitivo. Viciante.</h2>
+    <p class="como-sub">Quatro etapas que transformam sua corrida em batalha urbana.</p>
+    <div class="steps">
+      <div class="step">
+        <div class="step-num">1</div>
+        <h3>Corra</h3>
+        <p>Saia para correr normalmente. O app rastreia sua rota em tempo real.</p>
+      </div>
+      <div class="step">
+        <div class="step-num">2</div>
+        <h3>Conquiste</h3>
+        <p>Cada rua percorrida vira território seu no mapa da cidade.</p>
+      </div>
+      <div class="step">
+        <div class="step-num">3</div>
+        <h3>Defenda</h3>
+        <p>Outros corredores podem tomar seus territórios. Corra mais para manter.</p>
+      </div>
+      <div class="step">
+        <div class="step-num">4</div>
+        <h3>Domine</h3>
+        <p>Suba no ranking. Quem controlar mais territórios domina a cidade.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- MAPA -->
+<section class="mapa">
+  <div class="mapa-inner">
+    <p class="section-tag">Territórios</p>
+    <h2>Sua cidade. Seus territórios.</h2>
+    <p class="mapa-sub">Cada zona da cidade pode ser conquistada e disputada entre corredores rivais.</p>
+    <div class="mapa-visual">
+      <div class="territories">
+        <div class="territory active">
+          <div class="territory-label">Zona Norte</div>
+          <div class="territory-name">Conquistado</div>
+        </div>
+        <div class="territory rival">
+          <div class="territory-label">Centro</div>
+          <div class="territory-name">Em disputa</div>
+        </div>
+        <div class="territory active">
+          <div class="territory-label">Zona Sul</div>
+          <div class="territory-name">Conquistado</div>
+        </div>
+        <div class="territory rival">
+          <div class="territory-label">Zona Leste</div>
+          <div class="territory-name">Rival</div>
+        </div>
+        <div class="territory">
+          <div class="territory-label">Zona Oeste</div>
+          <div class="territory-name">Neutro</div>
+        </div>
+        <div class="territory active">
+          <div class="territory-label">Setor Industrial</div>
+          <div class="territory-name">Conquistado</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- FUNDADORES -->
+<section class="fundadores" id="fundadores">
+  <div class="fundadores-inner">
+    <p class="section-tag">100 Fundadores</p>
+    <h2>Os primeiros farão parte da história.</h2>
+    <p class="fundadores-sub">Vagas limitadas para os corredores que quiserem estar no início de algo grande.</p>
+    <div class="beneficios">
+      <div class="beneficio">
+        <div class="beneficio-icon">⚡</div>
+        <h4>Acesso antecipado</h4>
+        <p>Teste o app antes de qualquer pessoa. Influencie as funcionalidades.</p>
+      </div>
+      <div class="beneficio">
+        <div class="beneficio-icon">🏆</div>
+        <h4>Badge exclusivo</h4>
+        <p>Seu perfil terá o selo de Fundador para sempre, mesmo após o lançamento.</p>
+      </div>
+      <div class="beneficio">
+        <div class="beneficio-icon">🗺️</div>
+        <h4>Território garantido</h4>
+        <p>Fundadores começam com territórios pré-conquistados no mapa.</p>
+      </div>
+      <div class="beneficio">
+        <div class="beneficio-icon">⚔️</div>
+        <h4>Comunidade VIP</h4>
+        <p>Grupo exclusivo com os criadores do Battle Runners.</p>
+      </div>
+    </div>
+    <div class="counter">
+      <div class="counter-item">
+        <div class="counter-num">100</div>
+        <div class="counter-label">Vagas totais</div>
+      </div>
+      <div class="counter-sep">|</div>
+      <div class="counter-item">
+        <div class="counter-num" style="color:#7B2EFF">Limitado</div>
+        <div class="counter-label">Encerra no lançamento</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- FORMULÁRIO -->
+<section class="form-section" id="cadastro">
+  <div class="form-inner">
+    <p class="section-tag">Seja um Fundador</p>
+    <h2>Entre para os 100.</h2>
+    <p>Deixe seus dados. Entraremos em contato assim que o Battle Runners estiver pronto para os primeiros testes.</p>
+    <div class="form-box">
+      <form onsubmit="submitForm(event)">
+        <div class="form-group">
+          <label>Seu nome</label>
+          <input type="text" id="nome" placeholder="Como você se chama?" required>
+        </div>
+        <div class="form-group">
+          <label>WhatsApp</label>
+          <input type="tel" id="whatsapp" placeholder="(00) 00000-0000" required>
+        </div>
+        <div class="form-group">
+          <label>Sua cidade</label>
+          <input type="text" id="cidade" placeholder="Onde você corre?" required>
+        </div>
+        <div class="form-group">
+          <label>Instagram (opcional)</label>
+          <input type="text" id="instagram" placeholder="@seuinstagram">
+        </div>
+        <button type="submit" class="btn-form">⚔️ Quero ser Fundador</button>
+        <p class="form-note">Seus dados são usados apenas para contato sobre o Battle Runners. Sem spam.</p>
+      </form>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- RODAPÉ -->
+<footer>
+  <div class="footer-logo">BATTLE<span>RUNNERS</span></div>
+  <div class="footer-slogan">Corra · Conquiste · Domine</div>
+  <div class="footer-links">
+    <a href="https://instagram.com/battlerunners" target="_blank">Instagram</a>
+    <a href="#fundadores">Seja um Fundador</a>
+    <a href="#cadastro">Cadastro</a>
+  </div>
+  <p class="footer-copy">© 2025 Battle Runners · Todos os direitos reservados</p>
+</footer>
+
+<script>
+function submitForm(e){
+  e.preventDefault();
+  const nome=document.getElementById('nome').value;
+  const whatsapp=document.getElementById('whatsapp').value;
+  const cidade=document.getElementById('cidade').value;
+  const instagram=document.getElementById('instagram').value;
+
+  // Monta URL do Google Forms — substitua pela URL do seu formulário
+  const formUrl='https://docs.google.com/forms/d/e/SEU_FORM_ID_AQUI/formResponse';
+  
+  // Feedback imediato ao usuário
+  const btn=document.querySelector('.btn-form');
+  btn.textContent='✓ Cadastro realizado!';
+  btn.style.background='#fff';
+  setTimeout(()=>{
+    btn.textContent='⚔️ Quero ser Fundador';
+    btn.style.background='#39FF14';
+    document.querySelector('form').reset();
+  },3000);
+
+  // Abre o Google Forms em background (substitua pelo seu link real)
+  console.log('Fundador cadastrado:',{nome,whatsapp,cidade,instagram});
+}
+
+// Animação suave das seções ao rolar
+const observer=new IntersectionObserver((entries)=>{
+  entries.forEach(entry=>{
+    if(entry.isIntersecting){
+      entry.target.style.opacity='1';
+      entry.target.style.transform='translateY(0)';
+    }
+  });
+},{threshold:0.1});
+
+document.querySelectorAll('.conceito,.como-inner,.mapa-inner,.fundadores-inner,.form-inner').forEach(el=>{
+  el.style.opacity='0';
+  el.style.transform='translateY(20px)';
+  el.style.transition='opacity .6s ease, transform .6s ease';
+  observer.observe(el);
+});
+</script>
+</body>
+</html>
