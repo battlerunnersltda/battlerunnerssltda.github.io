@@ -63,12 +63,22 @@ body{background:#0A0A0A;color:#fff;font-family:-apple-system,BlinkMacSystemFont,
 .counter-label{font-size:.75rem;color:#555;text-transform:uppercase;letter-spacing:.08em;margin-top:.25rem}
 .counter-sep{color:#1e1e1e;font-size:2rem}
 .form-section{padding:6rem 2rem;text-align:center}
-.form-inner{max-width:700px;margin:0 auto}
+.form-inner{max-width:600px;margin:0 auto}
 .form-inner h2{font-size:clamp(1.8rem,4vw,2.5rem);font-weight:700;margin-bottom:1rem}
 .form-inner p{color:#666;margin-bottom:2.5rem;font-size:1rem;line-height:1.7}
-.form-box{background:#0d0d0d;border:0.5px solid #1e1e1e;border-radius:16px;padding:2rem;overflow:hidden}
-.form-box iframe{width:100%;border:none;border-radius:8px;min-height:700px;background:#fff;display:block}
+.form-box{background:#0d0d0d;border:0.5px solid #1e1e1e;border-radius:16px;padding:2.5rem}
+.form-group{margin-bottom:1.25rem;text-align:left}
+.form-group label{display:block;font-size:.8rem;color:#666;letter-spacing:.08em;text-transform:uppercase;margin-bottom:.5rem}
+.form-group input{width:100%;background:#111;border:0.5px solid #1e1e1e;border-radius:8px;padding:.875rem 1rem;color:#fff;font-size:.95rem;outline:none;transition:border-color .2s}
+.form-group input:focus{border-color:#39FF14}
+.form-group input::placeholder{color:#333}
+.btn-form{width:100%;background:#39FF14;color:#000;font-weight:700;font-size:1rem;padding:1rem;border-radius:8px;border:none;cursor:pointer;letter-spacing:.05em;text-transform:uppercase;transition:all .2s;margin-top:.5rem}
+.btn-form:hover{background:#fff;transform:translateY(-1px)}
+.btn-form:disabled{opacity:.6;cursor:not-allowed;transform:none}
 .form-note{font-size:.75rem;color:#444;margin-top:1rem;line-height:1.6}
+.success-msg{display:none;background:rgba(57,255,20,.08);border:0.5px solid #39FF14;border-radius:12px;padding:2.5rem;text-align:center}
+.success-msg h3{color:#39FF14;font-size:1.5rem;margin-bottom:.75rem}
+.success-msg p{color:#888;font-size:.95rem;line-height:1.7}
 footer{padding:3rem 2rem;border-top:0.5px solid #1a1a1a;text-align:center}
 .footer-logo{font-size:1.25rem;font-weight:800;letter-spacing:.05em;color:#fff;margin-bottom:.5rem}
 .footer-logo span{color:#39FF14}
@@ -88,11 +98,13 @@ footer{padding:3rem 2rem;border-top:0.5px solid #1a1a1a;text-align:center}
   .step-num::after{display:none}
   .territories{grid-template-columns:1fr 1fr}
   .counter-sep{display:none}
-  .form-box{padding:1rem}
 }
 </style>
 </head>
 <body>
+
+<!-- iframe invisível para envio ao Google Forms -->
+<iframe name="hidden-iframe" style="display:none"></iframe>
 
 <section class="hero">
   <p class="hero-tag">⚔️ Recrutamento aberto · Fundadores</p>
@@ -118,26 +130,10 @@ footer{padding:3rem 2rem;border-top:0.5px solid #1a1a1a;text-align:center}
     <h2>Simples. Competitivo. Viciante.</h2>
     <p class="como-sub">Quatro etapas que transformam sua corrida em batalha urbana.</p>
     <div class="steps">
-      <div class="step">
-        <div class="step-num">1</div>
-        <h3>Corra</h3>
-        <p>Saia para correr normalmente. O app rastreia sua rota em tempo real.</p>
-      </div>
-      <div class="step">
-        <div class="step-num">2</div>
-        <h3>Conquiste</h3>
-        <p>Cada rua percorrida vira território seu no mapa da cidade.</p>
-      </div>
-      <div class="step">
-        <div class="step-num">3</div>
-        <h3>Defenda</h3>
-        <p>Outros corredores podem tomar seus territórios. Corra mais para manter.</p>
-      </div>
-      <div class="step">
-        <div class="step-num">4</div>
-        <h3>Domine</h3>
-        <p>Suba no ranking. Quem controlar mais territórios domina a cidade.</p>
-      </div>
+      <div class="step"><div class="step-num">1</div><h3>Corra</h3><p>Saia para correr normalmente. O app rastreia sua rota em tempo real.</p></div>
+      <div class="step"><div class="step-num">2</div><h3>Conquiste</h3><p>Cada rua percorrida vira território seu no mapa da cidade.</p></div>
+      <div class="step"><div class="step-num">3</div><h3>Defenda</h3><p>Outros corredores podem tomar seus territórios. Corra mais para manter.</p></div>
+      <div class="step"><div class="step-num">4</div><h3>Domine</h3><p>Suba no ranking. Quem controlar mais territórios domina a cidade.</p></div>
     </div>
   </div>
 </section>
@@ -189,11 +185,40 @@ footer{padding:3rem 2rem;border-top:0.5px solid #1a1a1a;text-align:center}
   <div class="form-inner">
     <p class="section-tag">Seja um Fundador</p>
     <h2>Entre para os 100.</h2>
-    <p>Preencha o formulário abaixo. Entraremos em contato assim que o Battle Runners estiver pronto para os primeiros testes.</p>
+    <p>Deixe seus dados. Entraremos em contato assim que o Battle Runners estiver pronto para os primeiros testes.</p>
     <div class="form-box">
-      <iframe src="https://docs.google.com/forms/d/e/1FAIpQLScgHRdZRGqtr88bA6xbjFLymjRo25apcWu-EuL-Stkimw2JQw/viewform?embedded=true" width="640" height="689" frameborder="0" marginheight="0" marginwidth="0">Carregando…</iframe>
+      <div id="form-wrapper">
+        <form
+          id="founder-form"
+          action="https://docs.google.com/forms/d/e/1FAIpQLScgHRdZRGqtr88bA6xbjFLymjRo25apcWu-EuL-Stkimw2JQw/formResponse"
+          method="POST"
+          target="hidden-iframe"
+          onsubmit="handleSubmit(event)">
+          <div class="form-group">
+            <label>Seu nome *</label>
+            <input type="text" name="entry.1022067821" placeholder="Como você se chama?" required>
+          </div>
+          <div class="form-group">
+            <label>WhatsApp *</label>
+            <input type="tel" name="entry.872363934" placeholder="(00) 00000-0000" required>
+          </div>
+          <div class="form-group">
+            <label>Sua cidade *</label>
+            <input type="text" name="entry.2004106803" placeholder="Onde você corre?" required>
+          </div>
+          <div class="form-group">
+            <label>Instagram (opcional)</label>
+            <input type="text" placeholder="@seuinstagram">
+          </div>
+          <button type="submit" class="btn-form" id="btn-submit">⚔️ Quero ser Fundador</button>
+          <p class="form-note">Seus dados são usados apenas para contato sobre o Battle Runners. Sem spam.</p>
+        </form>
+      </div>
+      <div class="success-msg" id="success-msg">
+        <h3>⚔️ Bem-vindo, Fundador!</h3>
+        <p>Seu cadastro foi recebido com sucesso.<br>Você será um dos primeiros a testar o Battle Runners.<br><br>Fique de olho no seu WhatsApp — entraremos em contato em breve.</p>
+      </div>
     </div>
-    <p class="form-note">Seus dados são usados apenas para contato sobre o Battle Runners. Sem spam.</p>
   </div>
 </section>
 
@@ -211,18 +236,29 @@ footer{padding:3rem 2rem;border-top:0.5px solid #1a1a1a;text-align:center}
 </footer>
 
 <script>
-const observer=new IntersectionObserver((entries)=>{
-  entries.forEach(entry=>{
-    if(entry.isIntersecting){
-      entry.target.style.opacity='1';
-      entry.target.style.transform='translateY(0)';
+function handleSubmit(e) {
+  const btn = document.getElementById('btn-submit');
+  btn.disabled = true;
+  btn.textContent = 'Enviando...';
+  setTimeout(() => {
+    document.getElementById('form-wrapper').style.display = 'none';
+    document.getElementById('success-msg').style.display = 'block';
+  }, 1000);
+}
+
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.style.opacity = '1';
+      entry.target.style.transform = 'translateY(0)';
     }
   });
-},{threshold:0.1});
-document.querySelectorAll('.conceito,.como-inner,.mapa-inner,.fundadores-inner,.form-inner').forEach(el=>{
-  el.style.opacity='0';
-  el.style.transform='translateY(20px)';
-  el.style.transition='opacity .6s ease, transform .6s ease';
+}, { threshold: 0.1 });
+
+document.querySelectorAll('.conceito,.como-inner,.mapa-inner,.fundadores-inner,.form-inner').forEach(el => {
+  el.style.opacity = '0';
+  el.style.transform = 'translateY(20px)';
+  el.style.transition = 'opacity .6s ease, transform .6s ease';
   observer.observe(el);
 });
 </script>
