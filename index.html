@@ -48,6 +48,35 @@ body{background:#0A0A0A;color:#fff;font-family:-apple-system,BlinkMacSystemFont,
 .territory.rival{border-color:#7B2EFF;color:#7B2EFF;background:rgba(123,46,255,.05)}
 .territory-label{font-size:.7rem;letter-spacing:.08em;text-transform:uppercase;margin-bottom:.25rem;opacity:.6}
 .territory-name{font-size:.9rem;font-weight:600}
+
+/* VIDEO */
+.video-section{padding:6rem 2rem;background:#0d0d0d;text-align:center}
+.video-inner{max-width:700px;margin:0 auto}
+.video-inner h2{font-size:clamp(1.8rem,4vw,2.5rem);font-weight:700;margin-bottom:1rem}
+.video-sub{color:#666;margin-bottom:2.5rem;font-size:1rem;line-height:1.7}
+.video-wrap{position:relative;padding-bottom:177.77%;height:0;overflow:hidden;border-radius:16px;border:0.5px solid #1e1e1e;max-width:400px;margin:0 auto}
+.video-wrap iframe{position:absolute;top:0;left:0;width:100%;height:100%;border:none}
+.btn-yt{display:inline-flex;align-items:center;gap:8px;margin-top:1.5rem;background:#111;color:#fff;border:0.5px solid #1e1e1e;padding:.75rem 1.5rem;border-radius:8px;text-decoration:none;font-size:.9rem;transition:all .2s}
+.btn-yt:hover{border-color:#39FF14;color:#39FF14}
+
+/* AUDIO */
+.audio-section{padding:4rem 2rem;text-align:center}
+.audio-inner{max-width:600px;margin:0 auto}
+.audio-inner h2{font-size:1.5rem;font-weight:700;margin-bottom:.5rem}
+.audio-sub{color:#666;margin-bottom:2rem;font-size:.95rem;line-height:1.7}
+.audio-box{background:#0d0d0d;border:0.5px solid #1e1e1e;border-radius:16px;padding:2rem;display:flex;flex-direction:column;align-items:center;gap:1.25rem}
+.audio-title{font-size:.9rem;color:#888;letter-spacing:.05em}
+.audio-title span{color:#39FF14;font-weight:600}
+.custom-player{display:flex;align-items:center;gap:12px;width:100%}
+.play-btn{width:48px;height:48px;min-width:48px;background:#39FF14;border:none;border-radius:50%;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:1.1rem;transition:all .2s}
+.play-btn:hover{background:#fff;transform:scale(1.05)}
+.progress-wrap{flex:1;display:flex;flex-direction:column;gap:6px}
+.progress-bar{width:100%;height:4px;background:#1e1e1e;border-radius:2px;cursor:pointer;position:relative}
+.progress-fill{height:4px;background:#39FF14;border-radius:2px;width:0%;transition:width .1s linear}
+.time-row{display:flex;justify-content:space-between;font-size:11px;color:#555}
+.btn-download{display:inline-flex;align-items:center;gap:8px;background:#111;color:#39FF14;border:0.5px solid #39FF14;padding:.6rem 1.25rem;border-radius:8px;text-decoration:none;font-size:.85rem;transition:all .2s;cursor:pointer}
+.btn-download:hover{background:#39FF14;color:#000}
+
 .fundadores{padding:6rem 2rem;background:#0d0d0d;text-align:center}
 .fundadores-inner{max-width:700px;margin:0 auto}
 .fundadores h2{font-size:clamp(1.8rem,4vw,2.5rem);font-weight:700;margin-bottom:1rem}
@@ -103,7 +132,6 @@ footer{padding:3rem 2rem;border-top:0.5px solid #1a1a1a;text-align:center}
 </head>
 <body>
 
-<!-- iframe invisível para envio ao Google Forms -->
 <iframe name="hidden-iframe" style="display:none"></iframe>
 
 <section class="hero">
@@ -160,6 +188,49 @@ footer{padding:3rem 2rem;border-top:0.5px solid #1a1a1a;text-align:center}
 
 <div class="divider"></div>
 
+<!-- VÍDEO -->
+<section class="video-section">
+  <div class="video-inner">
+    <p class="section-tag">O movimento</p>
+    <h2>Veja o que está chegando.</h2>
+    <p class="video-sub">O Battle Runners está sendo construído. Assista ao primeiro vídeo do projeto.</p>
+    <div class="video-wrap">
+      <iframe src="https://www.youtube.com/embed/h0zUPcszKMM" title="Battle Runners" allowfullscreen allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"></iframe>
+    </div>
+    <a href="https://www.youtube.com/shorts/h0zUPcszKMM" target="_blank" class="btn-yt">▶ Ver no YouTube</a>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ÁUDIO -->
+<section class="audio-section">
+  <div class="audio-inner">
+    <p class="section-tag">A trilha da batalha</p>
+    <h2>Ouça o som da conquista.</h2>
+    <p class="audio-sub">A música oficial do Battle Runners. Baixe e treine no ritmo certo.</p>
+    <div class="audio-box">
+      <div class="audio-title">🎵 <span>Battle Runners — Trilha Oficial</span></div>
+      <div class="custom-player">
+        <button class="play-btn" id="playBtn" onclick="togglePlay()">▶</button>
+        <div class="progress-wrap">
+          <div class="progress-bar" onclick="seekAudio(event)">
+            <div class="progress-fill" id="progressFill"></div>
+          </div>
+          <div class="time-row">
+            <span id="currentTime">0:00</span>
+            <span id="totalTime">0:00</span>
+          </div>
+        </div>
+      </div>
+      <a href="Battle_Runners1.mp3" download="BattleRunners_Trilha_Oficial.mp3" class="btn-download">⬇ Baixar música</a>
+    </div>
+    <audio id="audioPlayer" src="Battle_Runners1.mp3" preload="metadata"></audio>
+  </div>
+</section>
+
+<div class="divider"></div>
+
 <section class="fundadores" id="fundadores">
   <div class="fundadores-inner">
     <p class="section-tag">100 Fundadores</p>
@@ -188,8 +259,7 @@ footer{padding:3rem 2rem;border-top:0.5px solid #1a1a1a;text-align:center}
     <p>Deixe seus dados. Entraremos em contato assim que o Battle Runners estiver pronto para os primeiros testes.</p>
     <div class="form-box">
       <div id="form-wrapper">
-        <form
-          id="founder-form"
+        <form id="founder-form"
           action="https://docs.google.com/forms/d/e/1FAIpQLScgHRdZRGqtr88bA6xbjFLymjRo25apcWu-EuL-Stkimw2JQw/formResponse"
           method="POST"
           target="hidden-iframe"
@@ -229,6 +299,7 @@ footer{padding:3rem 2rem;border-top:0.5px solid #1a1a1a;text-align:center}
   <div class="footer-slogan">Corra · Conquiste · Domine</div>
   <div class="footer-links">
     <a href="https://instagram.com/battlerunners" target="_blank">Instagram</a>
+    <a href="https://www.youtube.com/shorts/h0zUPcszKMM" target="_blank">YouTube</a>
     <a href="#fundadores">Seja um Fundador</a>
     <a href="#cadastro">Cadastro</a>
   </div>
@@ -236,29 +307,76 @@ footer{padding:3rem 2rem;border-top:0.5px solid #1a1a1a;text-align:center}
 </footer>
 
 <script>
-function handleSubmit(e) {
-  const btn = document.getElementById('btn-submit');
-  btn.disabled = true;
-  btn.textContent = 'Enviando...';
-  setTimeout(() => {
-    document.getElementById('form-wrapper').style.display = 'none';
-    document.getElementById('success-msg').style.display = 'block';
-  }, 1000);
+// FORMULÁRIO
+function handleSubmit(e){
+  const btn=document.getElementById('btn-submit');
+  btn.disabled=true;
+  btn.textContent='Enviando...';
+  setTimeout(()=>{
+    document.getElementById('form-wrapper').style.display='none';
+    document.getElementById('success-msg').style.display='block';
+  },1000);
 }
 
-const observer = new IntersectionObserver((entries) => {
-  entries.forEach(entry => {
-    if (entry.isIntersecting) {
-      entry.target.style.opacity = '1';
-      entry.target.style.transform = 'translateY(0)';
+// PLAYER DE ÁUDIO
+const audio=document.getElementById('audioPlayer');
+const playBtn=document.getElementById('playBtn');
+const progressFill=document.getElementById('progressFill');
+const currentTimeEl=document.getElementById('currentTime');
+const totalTimeEl=document.getElementById('totalTime');
+
+function formatTime(s){
+  const m=Math.floor(s/60);
+  const sec=Math.floor(s%60);
+  return m+':'+(sec<10?'0':'')+sec;
+}
+
+audio.addEventListener('loadedmetadata',()=>{
+  totalTimeEl.textContent=formatTime(audio.duration);
+});
+
+audio.addEventListener('timeupdate',()=>{
+  const pct=(audio.currentTime/audio.duration)*100;
+  progressFill.style.width=pct+'%';
+  currentTimeEl.textContent=formatTime(audio.currentTime);
+});
+
+audio.addEventListener('ended',()=>{
+  playBtn.textContent='▶';
+  progressFill.style.width='0%';
+});
+
+function togglePlay(){
+  if(audio.paused){
+    audio.play();
+    playBtn.textContent='⏸';
+  } else {
+    audio.pause();
+    playBtn.textContent='▶';
+  }
+}
+
+function seekAudio(e){
+  const bar=e.currentTarget;
+  const rect=bar.getBoundingClientRect();
+  const pct=(e.clientX-rect.left)/rect.width;
+  audio.currentTime=pct*audio.duration;
+}
+
+// ANIMAÇÕES
+const observer=new IntersectionObserver((entries)=>{
+  entries.forEach(entry=>{
+    if(entry.isIntersecting){
+      entry.target.style.opacity='1';
+      entry.target.style.transform='translateY(0)';
     }
   });
-}, { threshold: 0.1 });
+},{threshold:0.1});
 
-document.querySelectorAll('.conceito,.como-inner,.mapa-inner,.fundadores-inner,.form-inner').forEach(el => {
-  el.style.opacity = '0';
-  el.style.transform = 'translateY(20px)';
-  el.style.transition = 'opacity .6s ease, transform .6s ease';
+document.querySelectorAll('.conceito,.como-inner,.mapa-inner,.video-inner,.audio-inner,.fundadores-inner,.form-inner').forEach(el=>{
+  el.style.opacity='0';
+  el.style.transform='translateY(20px)';
+  el.style.transition='opacity .6s ease, transform .6s ease';
   observer.observe(el);
 });
 </script>
