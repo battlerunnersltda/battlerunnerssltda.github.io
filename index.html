@@ -128,6 +128,12 @@ footer{padding:3rem 2rem;border-top:0.5px solid #1a1a1a;text-align:center}
   .territories{grid-template-columns:1fr 1fr}
   .counter-sep{display:none}
 }
+
+/* CTA FLUTUANTE */
+.btn-float{position:fixed;bottom:1.5rem;right:1.5rem;z-index:999;background:#39FF14;color:#000;font-weight:700;font-size:.85rem;padding:.8rem 1.4rem;border-radius:50px;text-decoration:none;letter-spacing:.03em;box-shadow:0 4px 20px rgba(57,255,20,.35);display:flex;align-items:center;gap:6px;opacity:0;transform:translateY(20px);pointer-events:none;transition:opacity .3s ease,transform .3s ease}
+.btn-float.visible{opacity:1;transform:translateY(0);pointer-events:auto}
+.btn-float:hover{background:#fff}
+@media(max-width:600px){.btn-float{bottom:1rem;right:1rem;left:1rem;justify-content:center;font-size:.8rem}}
 </style>
 </head>
 <body>
@@ -138,13 +144,13 @@ footer{padding:3rem 2rem;border-top:0.5px solid #1a1a1a;text-align:center}
   <p class="hero-tag">⚔️ Recrutamento aberto · Fundadores</p>
   <h1>A CIDADE<span>SERÁ DIVIDIDA.</span></h1>
   <p class="hero-sub">Até hoje você corria para completar quilômetros. Agora você corre para conquistar territórios.</p>
-  <a href="#cadastro" class="btn-primary">Quero ser Fundador</a>
+  <a href="#conceito" class="btn-primary">Descubra Como Funciona</a>
   <div class="hero-scroll">scroll</div>
 </section>
 
 <div class="divider"></div>
 
-<section class="conceito">
+<section class="conceito" id="conceito">
   <p class="section-tag">O conceito</p>
   <h2>Não é mais um app de corrida.<br><em>É uma guerra.</em></h2>
   <p>Battle Runners transforma cada quilômetro percorrido em território conquistado. Corra pelos bairros da sua cidade, domine zonas, suba de ranking e prove que a cidade pertence a você.</p>
@@ -247,6 +253,7 @@ footer{padding:3rem 2rem;border-top:0.5px solid #1a1a1a;text-align:center}
       <div class="counter-sep">|</div>
       <div class="counter-item"><div class="counter-num" style="color:#7B2EFF">Limitado</div><div class="counter-label">Encerra no lançamento</div></div>
     </div>
+    <a href="#cadastro" class="btn-primary">⚔️ Quero ser Fundador</a>
   </div>
 </section>
 
@@ -293,6 +300,8 @@ footer{padding:3rem 2rem;border-top:0.5px solid #1a1a1a;text-align:center}
 </section>
 
 <div class="divider"></div>
+
+<a href="#cadastro" class="btn-float" id="floatCta">⚔️ Quero ser Fundador</a>
 
 <footer>
   <div class="footer-logo">BATTLE<span>RUNNERS</span></div>
@@ -362,6 +371,27 @@ function seekAudio(e){
   const pct=(e.clientX-rect.left)/rect.width;
   audio.currentTime=pct*audio.duration;
 }
+
+// CTA FLUTUANTE
+const floatCta=document.getElementById('floatCta');
+const heroSection=document.querySelector('.hero');
+const cadastroSection=document.getElementById('cadastro');
+
+const heroObserver=new IntersectionObserver((entries)=>{
+  entries.forEach(entry=>{
+    // some fora do hero = mostra o botão flutuante
+    floatCta.classList.toggle('visible', !entry.isIntersecting);
+  });
+},{threshold:0});
+heroObserver.observe(heroSection);
+
+const cadastroObserver=new IntersectionObserver((entries)=>{
+  entries.forEach(entry=>{
+    // formulário já visível = esconde o botão flutuante (evita redundância)
+    if(entry.isIntersecting) floatCta.classList.remove('visible');
+  });
+},{threshold:0.3});
+cadastroObserver.observe(cadastroSection);
 
 // ANIMAÇÕES
 const observer=new IntersectionObserver((entries)=>{
