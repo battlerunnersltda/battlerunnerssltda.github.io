@@ -101,6 +101,14 @@ body{background:#0A0A0A;color:#fff;font-family:-apple-system,BlinkMacSystemFont,
 .form-group input{width:100%;background:#111;border:0.5px solid #1e1e1e;border-radius:8px;padding:.875rem 1rem;color:#fff;font-size:.95rem;outline:none;transition:border-color .2s}
 .form-group input:focus{border-color:#39FF14}
 .form-group input::placeholder{color:#333}
+.form-group select,.form-group textarea{width:100%;background:#111;border:0.5px solid #1e1e1e;border-radius:8px;padding:.875rem 1rem;color:#fff;font-size:.95rem;outline:none;transition:border-color .2s;font-family:inherit;resize:vertical}
+.form-group select{cursor:pointer}
+.form-group select:invalid{color:#333}
+.form-group select:focus,.form-group textarea:focus{border-color:#7B2EFF}
+.form-group textarea::placeholder{color:#333}
+.report-btn{background:#7B2EFF}
+.report-btn:hover{background:#fff;color:#000}
+.success-msg.purple{border-color:#7B2EFF;background:rgba(123,46,255,.08)}
 .btn-form{width:100%;background:#39FF14;color:#000;font-weight:700;font-size:1rem;padding:1rem;border-radius:8px;border:none;cursor:pointer;letter-spacing:.05em;text-transform:uppercase;transition:all .2s;margin-top:.5rem}
 .btn-form:hover{background:#fff;transform:translateY(-1px)}
 .btn-form:disabled{opacity:.6;cursor:not-allowed;transform:none}
@@ -301,6 +309,61 @@ footer{padding:3rem 2rem;border-top:0.5px solid #1a1a1a;text-align:center}
 
 <div class="divider"></div>
 
+<section class="form-section" id="reportar">
+  <div class="form-inner">
+    <p class="section-tag" style="color:#7B2EFF">Encontrou algo?</p>
+    <h2>Reporte um problema.</h2>
+    <p>Está testando o app ou o site e encontrou um bug, tem uma sugestão ou dúvida? Conta pra gente.</p>
+    <div class="form-box">
+      <div id="report-form-wrapper">
+        <form id="report-form"
+          action="https://docs.google.com/forms/d/e/1FAIpQLSccGwRj-7eOga-jv9Vwzei7b5JHIbcJhGsjArJ_lgztpKeNzQ/formResponse"
+          method="POST"
+          target="hidden-iframe"
+          onsubmit="handleReportSubmit(event)">
+          <div class="form-group">
+            <label>Seu nome *</label>
+            <input type="text" name="entry.517630948" placeholder="Como você se chama?" required>
+          </div>
+          <div class="form-group">
+            <label>WhatsApp ou e-mail *</label>
+            <input type="text" name="entry.1943142248" placeholder="Como podemos te responder?" required>
+          </div>
+          <div class="form-group">
+            <label>Tipo *</label>
+            <select name="entry.163620850" required>
+              <option value="" disabled selected>Selecione</option>
+              <option value="Bug">Bug</option>
+              <option value="Sugestão">Sugestão</option>
+              <option value="Dúvida">Dúvida</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label>Descreva *</label>
+            <textarea name="entry.2073743699" rows="4" placeholder="O que aconteceu? O que você esperava que acontecesse?" required></textarea>
+          </div>
+          <div class="form-group">
+            <label>Link do print/vídeo (opcional)</label>
+            <input type="text" name="entry.390112354" placeholder="Cole aqui o link (imgur, drive...)">
+          </div>
+          <div class="form-group">
+            <label>Modelo do celular (opcional)</label>
+            <input type="text" name="entry.1778681154" placeholder="Ex: iPhone 13, Galaxy S23...">
+          </div>
+          <button type="submit" class="btn-form report-btn" id="report-btn-submit">Enviar Report</button>
+          <p class="form-note">Seu report vai direto para nossa equipe. Obrigado por ajudar a melhorar o Battle Runners.</p>
+        </form>
+      </div>
+      <div class="success-msg purple" id="report-success-msg">
+        <h3 style="color:#7B2EFF">Recebido!</h3>
+        <p>Seu report chegou até a gente.<br>Obrigado por ajudar a deixar o Battle Runners cada vez melhor.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
 <a href="#cadastro" class="btn-float" id="floatCta">⚔️ Quero ser Fundador</a>
 
 <footer>
@@ -311,7 +374,7 @@ footer{padding:3rem 2rem;border-top:0.5px solid #1a1a1a;text-align:center}
     <a href="https://www.youtube.com/shorts/h0zUPcszKMM" target="_blank">YouTube</a>
     <a href="#fundadores">Seja um Fundador</a>
     <a href="#cadastro">Cadastro</a>
-    <a href="https://forms.gle/qfawSi16wyvBJ8kz9" target="_blank">Reportar Problema / Suporte</a>
+    <a href="#reportar">Reportar Problema / Suporte</a>
   </div>
   <p class="footer-copy">© 2025 Battle Runners · Todos os direitos reservados</p>
 </footer>
@@ -325,6 +388,16 @@ function handleSubmit(e){
   setTimeout(()=>{
     document.getElementById('form-wrapper').style.display='none';
     document.getElementById('success-msg').style.display='block';
+  },1000);
+}
+
+function handleReportSubmit(e){
+  const btn=document.getElementById('report-btn-submit');
+  btn.disabled=true;
+  btn.textContent='Enviando...';
+  setTimeout(()=>{
+    document.getElementById('report-form-wrapper').style.display='none';
+    document.getElementById('report-success-msg').style.display='block';
   },1000);
 }
 
